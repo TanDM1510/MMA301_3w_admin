@@ -9,7 +9,11 @@ export const LocalStorage = (function () {
       localStorage.setItem("accessToken", accessToken);
     }
   }
-
+  function _setRole(role) {
+    if (role) {
+      localStorage.setItem("role", role);
+    }
+  }
   function _setRefreshToken(refreshToken) {
     if (refreshToken) {
       localStorage.setItem("refreshToken", refreshToken);
@@ -23,11 +27,14 @@ export const LocalStorage = (function () {
   function _getRefreshToken() {
     return localStorage.getItem("refreshToken");
   }
+  function _getRole() {
+    return localStorage.getItem("role");
+  }
 
   function _clearToken() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("walletName");
+    localStorage.removeItem("role");
   }
 
   return {
@@ -36,5 +43,7 @@ export const LocalStorage = (function () {
     getAccessToken: _getAccessToken,
     getRefreshToken: _getRefreshToken,
     clearToken: _clearToken,
+    setRole: _setRole,
+    getRole: _getRole,
   };
 })();

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Layout, Menu, Breadcrumb, theme } from "antd";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -6,8 +7,9 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { LocalStorage } from "../utils/LocalStorage";
+
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -18,9 +20,9 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Option 1", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
+  getItem("Manager Host", "managerHosts", <PieChartOutlined />),
+  getItem("Manager Report", "managerReports", <DesktopOutlined />),
+  getItem("Manager Voucher", "sub1", <UserOutlined />, [
     getItem("Tom", "3"),
     getItem("Bill", "4"),
     getItem("Alex", "5"),
@@ -29,13 +31,25 @@ const items = [
     getItem("Team 1", "6"),
     getItem("Team 2", "8"),
   ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("SignOut", "signout", <FileOutlined />),
 ];
+
 const ShareLayout = () => {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  useEffect(() => {
+    const role = LocalStorage.getRole();
+    if (role !== "staff") {
+      navigate("/forbidden");
+      LocalStorage.clearToken();
+    }
+  }, [navigate]);
+
   return (
     <Layout
       style={{
@@ -49,6 +63,14 @@ const ShareLayout = () => {
       >
         <div className="demo-logo-vertical" />
         <Menu
+          onClick={({ key }) => {
+            if (key === "signout") {
+              LocalStorage.clearToken();
+              navigate("/");
+            } else {
+              navigate(key);
+            }
+          }}
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
@@ -94,4 +116,5 @@ const ShareLayout = () => {
     </Layout>
   );
 };
+
 export default ShareLayout;

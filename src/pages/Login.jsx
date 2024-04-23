@@ -12,8 +12,15 @@ const LoginForm = () => {
       console.log("Login successful:", response);
       LocalStorage.setToken(response.tokens.access.token);
       LocalStorage.setRefreshToken(response.tokens.refresh.token);
-
-      navigation("/staff");
+      LocalStorage.setRole(response.user.role);
+      if (response.user.role === "staff") {
+        navigation("/staff");
+      } else if (response.user.role === "admin") {
+        navigation("/admin");
+      } else {
+        navigation("/");
+        LocalStorage.clearToken();
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
