@@ -23,7 +23,6 @@ const processQueue = (error, token = null) => {
 
   failedQueue = [];
 };
-
 const axiosClient = axios.create();
 
 // Add a request interceptor

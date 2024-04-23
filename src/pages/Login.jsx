@@ -1,46 +1,86 @@
-import { useState } from "react";
 import { baseURL, loginPath } from "../api/endPoints";
 import { LocalStorage } from "../utils/LocalStorage";
 import axiosClient from "../api/customFetch";
+import { Button, Form, Input } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const data = {
-      email: username,
-      password: password,
-    };
+  const navigation = useNavigate();
+  const onFinish = async (values) => {
     try {
-      const response = await axiosClient.post(baseURL + loginPath, data);
-      console.log("Login successful:", response.data);
-      LocalStorage.setToken(response.data.token.access.token);
-      LocalStorage.setRefreshToken(response.data.refresh.token);
+      const response = await axiosClient.post(baseURL + loginPath, values);
+      console.log("Login successful:", response);
+      LocalStorage.setToken(response.tokens.access.token);
+      LocalStorage.setRefreshToken(response.tokens.refresh.token);
+
+      navigation("/staff");
     } catch (error) {
       console.error("Login failed:", error);
     }
   };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md border-2 p-16 rounded-xl w-full space-y-8 shadow-2xl shadow-orange-200">
+        <div>
+          <h2 className=" text-center text-3xl font-extrabold text-gray-900">
+            Welcome Back Admin
+          </h2>
+        </div>
+        <Form
+          name="basic"
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+          className="mt-8 space-y-6"
+        >
+          <div className="rounded-md shadow-sm -space-y-px">
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+          </div>
+          <div>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full flex justify-center  px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign in
+            </Button>
+          </div>
+        </Form>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+    </div>
   );
 };
+
 export default LoginForm;
