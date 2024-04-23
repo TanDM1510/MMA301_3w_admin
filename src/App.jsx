@@ -11,7 +11,7 @@ function App() {
           <Route path="/staff" element={<ShareLayout />}>
             <Route path="/staff/managerUser" element={<StaffUser />} />
           </Route>
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<LoginForm />} />
         </Routes>
       </BrowserRouter>
     </>

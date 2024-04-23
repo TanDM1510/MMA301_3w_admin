@@ -28,7 +28,7 @@ const LoginForm = () => {
       <div className="max-w-md border-2 p-16 rounded-xl w-full space-y-8 shadow-2xl shadow-orange-200">
         <div>
           <h2 className=" text-center text-3xl font-extrabold text-gray-900">
-            Welcome Back Admin
+            Welcome Back
           </h2>
         </div>
         <Form
