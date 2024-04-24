@@ -5,6 +5,7 @@ import {
   ExclamationCircleOutlined,
   UserOutlined,
   BarcodeOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
 import { LocalStorage } from "../../utils/LocalStorage";
@@ -49,7 +50,11 @@ const ShareLayout = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <div className=" text-xl font-bold text-red-50 text-center pt-3">
-          <span className="font-mono-">STAFF MANAGER</span>
+          {collapsed ? (
+            <HomeOutlined />
+          ) : (
+            <span className="font-mono-">STAFF MANAGER</span>
+          )}
         </div>
         <Menu
           onClick={({ key }) => {
