@@ -1,6 +1,6 @@
-import { baseURL, loginPath } from "../api/endPoints";
-import { LocalStorage } from "../utils/LocalStorage";
-import axiosClient from "../api/customFetch";
+import { baseURL, loginPath } from "../../api/endPoints";
+import { LocalStorage } from "../../utils/LocalStorage";
+import axiosClient from "../../api/customFetch";
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const LoginForm = () => {
       LocalStorage.setRefreshToken(response.tokens.refresh.token);
       LocalStorage.setRole(response.user.role);
       if (response.user.role === "staff") {
-        navigation("/staff");
+        navigation("/staff/manageHosts");
       } else if (response.user.role === "admin") {
         navigation("/admin");
       } else {

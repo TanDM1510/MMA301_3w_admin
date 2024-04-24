@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import StaffUser from "./pages/StaffUser";
-import ShareLayout from "./pages/ShareLayout";
-import LoginForm from "./pages/Login";
-import Forbidden from "./pages/Forbidden";
-import NotFound from "./pages/404page";
+import StaffUser from "./pages/ShareLayoutStaff/StaffUser";
+import ShareLayout from "./pages/ShareLayoutStaff/ShareLayout";
+import LoginForm from "./pages/Login/Login";
+import Forbidden from "./pages/Forbidden/Forbidden";
+import NotFound from "./pages/404page/404page";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/staff" element={<ShareLayout />}>
-            <Route path="/staff/managerUser" element={<StaffUser />} />
+            <Route path="/staff/manageHosts" element={<StaffUser />} />
           </Route>
           <Route path="/" element={<LoginForm />} />
           <Route path="/forbidden" element={<Forbidden />} />

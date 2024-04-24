@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { Layout, Menu, Breadcrumb, theme } from "antd";
+import { Layout, Menu } from "antd";
 import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
+  LogoutOutlined,
+  ExclamationCircleOutlined,
   UserOutlined,
+  BarcodeOutlined,
 } from "@ant-design/icons";
 import { Outlet, useNavigate } from "react-router-dom";
-import { LocalStorage } from "../utils/LocalStorage";
+import { LocalStorage } from "../../utils/LocalStorage";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -20,27 +19,15 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Manager Host", "managerHosts", <PieChartOutlined />),
-  getItem("Manager Report", "managerReports", <DesktopOutlined />),
-  getItem("Manager Voucher", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("SignOut", "signout", <FileOutlined />),
+  getItem("Manage Host", "manageHosts", <UserOutlined />),
+  getItem("Manage Report", "manageReports", <ExclamationCircleOutlined />),
+  getItem("Manage Voucher", "manageVouchers", <BarcodeOutlined />),
+  getItem("SignOut", "signout", <LogoutOutlined />),
 ];
 
 const ShareLayout = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   useEffect(() => {
     const role = LocalStorage.getRole();
@@ -61,7 +48,9 @@ const ShareLayout = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="demo-logo-vertical" />
+        <div className=" text-xl font-bold text-red-50 text-center pt-3">
+          <span className="font-mono-">STAFF MANAGER</span>
+        </div>
         <Menu
           onClick={({ key }) => {
             if (key === "signout") {
@@ -75,36 +64,11 @@ const ShareLayout = () => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
+          className="pt-10"
         />
       </Sider>
       <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-          style={{
-            margin: "0 16px",
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          ></Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <Outlet />
-          </div>
-        </Content>
+        <Outlet />
         <Footer
           style={{
             textAlign: "center",
