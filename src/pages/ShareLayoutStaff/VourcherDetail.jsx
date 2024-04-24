@@ -163,6 +163,10 @@ const VoucherDetail = () => {
         onCancel={() => setUpdateModalVisible(false)}
         onOk={async () => {
           try {
+            if (defaultStatus === 1) {
+              toast.error("The status not change ");
+              return;
+            }
             const response = await axiosClient.put(baseURL + `/staff/qr`, {
               ...rest,
               status: selectedStatus,
@@ -188,6 +192,10 @@ const VoucherDetail = () => {
         onCancel={() => setBanModalVisible(false)}
         onOk={async () => {
           try {
+            if (defaultStatus === 1 || defaultStatus === 3) {
+              toast.error("The status not change ");
+              return;
+            }
             const response = await axiosClient.put(baseURL + `/staff/ban_qr`, {
               qr_id: voucher._id,
             });

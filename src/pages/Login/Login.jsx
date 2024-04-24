@@ -3,6 +3,7 @@ import { LocalStorage } from "../../utils/LocalStorage";
 import axiosClient from "../../api/customFetch";
 import { Button, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const navigation = useNavigate();
@@ -10,19 +11,24 @@ const LoginForm = () => {
     try {
       const response = await axiosClient.post(baseURL + loginPath, values);
       console.log("Login successful:", response);
-      LocalStorage.setToken(response.tokens.access.token);
-      LocalStorage.setRefreshToken(response.tokens.refresh.token);
-      LocalStorage.setRole(response.user.role);
+      LocalStorage.setToken(response?.tokens?.access?.token);
+      LocalStorage.setRefreshToken(response?.tokens?.refresh?.token);
+      LocalStorage.setRole(response?.user?.role);
+      toast.error(response?.status);
       if (response.user.role === "staff") {
         navigation("/staff/manageHosts");
+        toast.success("Login success");
       } else if (response.user.role === "admin") {
+        toast.success("Login success");
         navigation("/admin");
       } else {
         navigation("/");
+        toast.error("You can't login to the system");
         LocalStorage.clearToken();
       }
     } catch (error) {
       console.error("Login failed:", error);
+      toast.error(error);
     }
   };
 
