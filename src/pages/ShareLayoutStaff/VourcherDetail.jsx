@@ -15,6 +15,7 @@ const VoucherDetail = () => {
   const [banModalVisible, setBanModalVisible] = useState(false);
   const navigate = useNavigate();
   const {
+    image,
     __v,
     host_id,
     _id,
@@ -52,6 +53,7 @@ const VoucherDetail = () => {
 
   const handleStatusChange = (value) => {
     setSelectedStatus(value);
+    setDefaultStatus(value);
   };
 
   useEffect(() => {
@@ -163,7 +165,7 @@ const VoucherDetail = () => {
         onCancel={() => setUpdateModalVisible(false)}
         onOk={async () => {
           try {
-            if (defaultStatus === 1) {
+            if (selectedStatus === 1) {
               toast.error("The status not change ");
               return;
             }
