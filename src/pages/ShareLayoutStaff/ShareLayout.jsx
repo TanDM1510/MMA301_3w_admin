@@ -21,7 +21,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem("Manage Host", "manageHosts", <UserOutlined />),
-  getItem("Manage Report", "manageReports", <ExclamationCircleOutlined />),
+  // getItem("Manage Report", "manageReports", <ExclamationCircleOutlined />),
   getItem("Manage Voucher", "manageVouchers", <BarcodeOutlined />),
   getItem("SignOut", "signout", <LogoutOutlined />),
 ];
