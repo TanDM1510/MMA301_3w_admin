@@ -3,6 +3,8 @@ export const baseURL = "http://20.243.125.223:3000/api/v1";
 export const loginPath = "/login";
 export const signUpPath = "/signup";
 export const users = "/user";
+export const host = "/staff/host";
+export const qr = "/qr";
 export const gptsPath = "/gpts";
 
 export const reviewsPath = "/reviews";
