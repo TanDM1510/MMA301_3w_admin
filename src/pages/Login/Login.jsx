@@ -16,7 +16,7 @@ const LoginForm = () => {
       if (response.user.role === "staff") {
         navigation("/staff/manageHosts");
       } else if (response.user.role === "admin") {
-        navigation("/admin");
+        navigation("/admin/managePayment");
       } else {
         navigation("/");
         LocalStorage.clearToken();

@@ -4,6 +4,8 @@ export const loginPath = "/login";
 export const signUpPath = "/signup";
 export const users = "/user";
 export const gptsPath = "/gpts";
+export const payment = "/host/payment";
+export const roleName = "/roles";
 
 export const reviewsPath = "/reviews";
 export const categoriesPath = "/categories";
